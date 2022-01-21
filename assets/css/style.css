@@ -85,3 +85,10 @@ header {
     font-family: Arial, monospace, sans-serif;
     font-size: 18px;
 }
+
+/* quiz portion */
+.questions {
+    display: grid;
+    font-family: Arial, monospace, sans-serif;
+    font-size: 20px;
+}
