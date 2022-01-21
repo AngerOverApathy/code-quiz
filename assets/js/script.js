@@ -11,7 +11,8 @@
 // THEN I can save my initials and score
 
 //questions
-var questions = [
+
+var questionsArr = [
     { prompt: "How do you create a function in JavaScript?",
       choices:["1. function:myFunction()", "2. function myFunction()", "3. function=myFunction()", "4. myFunction=function()"],
       answer: "2. function myFunction()" },
@@ -33,17 +34,81 @@ var questions = [
     answer: "2. quotation marks"}
 ];
 
+var questionIndex = 0;
 var score = 0;
-
-for(var i=0; i < questions.length; i++) {
-    var response = ""
-};
-
+var timerId
+var time = questionsArr.length * 10;
+var timeEl = document.getElementById('timeLeft')
+var startBtn = document.getElementById('start-quiz')
+var startEl = document.getElementById('startDiv')
 var questions = document.getElementById('questions')
 var answerEl = document.querySelectorAll('answer')
 var questionEl = document.getElementById('questions')
 
 const submitBtn = document.getElementById('submit')
 
+function startQuiz() {
+    startEl.classList.add('hide');
+    questions.classList.remove('hide')
+    timerId = setInterval(clockTick, 1000);
+
+    timeEl.textContent = time;
+    newQuestion();
+}
+
+function clockTick() {
+    time --;
+    timeEl.textContent = time;
+
+    if(time<=0) {
+        console.log('Quiz Over')
+    }
+} 
+
+function newQuestion() {
+    var currentQuestion = questionsArr[questionIndex];
+    var choicesEl = document.getElementById('choices')
+    console.log(currentQuestion)
+    var title = document.createElement('h2');
+    title.textContent = currentQuestion.prompt;
+    questions.appendChild(title);
+
+    //Empty out choices div in HTML
+    choicesEl.innerHTML =  "";
+    currentQuestion.choices.forEach(function(choice, i) {
+        var choiceBtn = document.createElement("button");
+        choiceBtn.setAttribute('id','btn');
+        choiceBtn.setAttribute('value', choice);
+
+        choiceBtn.textContent = choice;
+        choiceBtn.onclick = choiceClick;
+        choicesEl.appendChild(choiceBtn)
+    })
+
+}
+
+function choiceClick() {
+    console.log(this.value)
+    if(this.value !== questionsArr[questionIndex].answer) {
+        time -=10;
+        if(time<0) {
+            time = 0;
+        }
+        timeEl.textContent = time;
+    }
+
+    questionIndex++;
+
+    if(questionIndex === questionsArr.length) {
+        console.log('quizover')
+    } else {
+        newQuestion();
+    }
+}
+
+function quizEnd () {
+    clearInterval(timerId);
+}
+
 //time remaining
-htmlTimeLeft.textContent = timeLeft;
+startBtn.onclick = startQuiz;
