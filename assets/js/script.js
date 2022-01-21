@@ -10,8 +10,6 @@
 // WHEN the game is over
 // THEN I can save my initials and score
 
-//variables
-
 //questions
 var questions = [
     { prompt: "How do you create a function in JavaScript?",
@@ -36,3 +34,16 @@ var questions = [
 ];
 
 var score = 0;
+
+for(var i=0; i < questions.length; i++) {
+    var response = ""
+};
+
+var questions = document.getElementById('questions')
+var answerEl = document.querySelectorAll('answer')
+var questionEl = document.getElementById('questions')
+
+const submitBtn = document.getElementById('submit')
+
+//time remaining
+htmlTimeLeft.textContent = timeLeft;
