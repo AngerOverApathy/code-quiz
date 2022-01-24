@@ -10,8 +10,7 @@
 // WHEN the game is over
 // THEN I can save my initials and score
 
-//questions
-
+//questions 
 var questionsArr = [
     { prompt: "How do you create a function in JavaScript?",
       choices:["1. function:myFunction()", "2. function myFunction()", "3. function=myFunction()", "4. myFunction=function()"],
@@ -37,16 +36,19 @@ var questionsArr = [
 var questionIndex = 0;
 var score = 0;
 var timerId
-var time = questionsArr.length * 10;
-var timeEl = document.getElementById('timeLeft')
-var startBtn = document.getElementById('start-quiz')
-var startEl = document.getElementById('startDiv')
-var questions = document.getElementById('questions')
-var answerEl = document.querySelectorAll('answer')
-var questionEl = document.getElementById('questions')
+var time = questionsArr.length * 10; //10 seconds per question
+var timeEl = document.getElementById('timeLeft') //time remaining
+var startBtn = document.getElementById('start-quiz') // start quiz btn
+var startEl = document.getElementById('startDiv') // start div container
+var questions = document.getElementById('questions') // quiz questions
+var userPrompt = document.getElementById('prompt')
 
-const submitBtn = document.getElementById('submit')
+const submitBtn = document.getElementById('submit') //submit button
 
+document.getElementById('btn').style.display = "none";
+questions.setAttribute('id', 'questions')
+
+//toggle hidden attribute
 function startQuiz() {
     startEl.classList.add('hide');
     questions.classList.remove('hide')
@@ -61,17 +63,17 @@ function clockTick() {
     timeEl.textContent = time;
 
     if(time<=0) {
-        console.log('Quiz Over')
+       console.log('Your time is up!')
     }
 } 
 
 function newQuestion() {
     var currentQuestion = questionsArr[questionIndex];
     var choicesEl = document.getElementById('choices')
-    console.log(currentQuestion)
     var title = document.createElement('h2');
     title.textContent = currentQuestion.prompt;
-    questions.appendChild(title);
+    userPrompt.innerHTML = "";
+    userPrompt.appendChild(title);
 
     //Empty out choices div in HTML
     choicesEl.innerHTML =  "";
@@ -92,7 +94,7 @@ function choiceClick() {
     if(this.value !== questionsArr[questionIndex].answer) {
         time -=10;
         if(time<0) {
-            time = 0;
+            time === 0;
         }
         timeEl.textContent = time;
     }
