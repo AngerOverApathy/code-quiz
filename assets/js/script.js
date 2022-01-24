@@ -10,7 +10,7 @@
 // WHEN the game is over
 // THEN I can save my initials and score
 
-//questions 
+//questions and variables 
 var questionsArr = [
     { prompt: "How do you create a function in JavaScript?",
       choices:["1. function:myFunction()", "2. function myFunction()", "3. function=myFunction()", "4. myFunction=function()"],
@@ -35,17 +35,21 @@ var questionsArr = [
 
 var questionIndex = 0;
 var score = 0;
+var scoreEl = document.getElementById('score')
 var timerId
-var time = questionsArr.length * 10; //10 seconds per question
+var time = questionsArr.length * 15; //15 seconds per question
 var timeEl = document.getElementById('timeLeft') //time remaining
 var startBtn = document.getElementById('start-quiz') // start quiz btn
 var startEl = document.getElementById('startDiv') // start div container
 var questions = document.getElementById('questions') // quiz questions
 var userPrompt = document.getElementById('prompt')
+var checkAnswer = document.getElementById('checkAnswer')
+var viewScore = document.getElementById('scoreBoard')
 
 const submitBtn = document.getElementById('submit') //submit button
 
 document.getElementById('btn').style.display = "none";
+viewScore.classList.add('hide')
 questions.setAttribute('id', 'questions')
 
 //toggle hidden attribute
@@ -55,9 +59,11 @@ function startQuiz() {
     timerId = setInterval(clockTick, 1000);
 
     timeEl.textContent = time;
+   // scoreEl.textContent= score;
     newQuestion();
 }
 
+//timer function
 function clockTick() {
     time --;
     timeEl.textContent = time;
@@ -67,6 +73,13 @@ function clockTick() {
     }
 } 
 
+//answer response function
+function answerResponse () {
+
+}
+
+
+//new question populates
 function newQuestion() {
     var currentQuestion = questionsArr[questionIndex];
     var choicesEl = document.getElementById('choices')
@@ -75,42 +88,45 @@ function newQuestion() {
     userPrompt.innerHTML = "";
     userPrompt.appendChild(title);
 
+    
+
     //Empty out choices div in HTML
     choicesEl.innerHTML =  "";
     currentQuestion.choices.forEach(function(choice, i) {
         var choiceBtn = document.createElement("button");
         choiceBtn.setAttribute('id','btn');
         choiceBtn.setAttribute('value', choice);
-
         choiceBtn.textContent = choice;
         choiceBtn.onclick = choiceClick;
         choicesEl.appendChild(choiceBtn)
     })
-
 }
 
 function choiceClick() {
     console.log(this.value)
     if(this.value !== questionsArr[questionIndex].answer) {
         time -=10;
-        if(time<0) {
+    } 
+    else if(this.value === questionsArr[questionIndex].answer) {
+        score++;
+        } 
+        
+    if(time <= 0) {
             time === 0;
-        }
-        timeEl.textContent = time;
-    }
+        };
 
     questionIndex++;
 
     if(questionIndex === questionsArr.length) {
-        console.log('quizover')
+        function quizEnd () {
+    clearInterval(timerId);
+    questions.classList.add('hide');
+}
     } else {
         newQuestion();
     }
 }
 
-function quizEnd () {
-    clearInterval(timerId);
-}
 
 //time remaining
 startBtn.onclick = startQuiz;

@@ -9,27 +9,38 @@
 </head>
 <body>
     <header>
-        <button class="scoreBtn">View High Scores</button>
+        <!--<button class="scoreBtn">View High Scores</button>-->
+        <a href="#" class="scoreBtn">View High Scores</a>
+       <!-- <p class="scoreBtn">Your Score:<span id="score">xxx</span></p>-->
         <p>Time Remaining:<span id="timeLeft">xxx</span></p>
     </header>
 
 
+    <!-- div for starting page-->
 <div class="code-quiz" id="startDiv">
     <h1>Coding Quiz Challenege</h1>
-    <p>Remember, incorrect answers will reduce your score and remaining time.</p>
+    <p>Remember, incorrect answers will reduce your remaining time.</p>
     <button class="quizBtn" id="start-quiz">Start Quiz</button>
 </div>
 
-
+<!--divs for questions and answers-->
 <div class = "questionArr" id="questions">
     <div id="prompt">
     </div>
         <div id="choices">
             <div id="btn">
-
+                <div id="checkAnswer"></p>
             </div>
         </div>
     </div>
+
+<!--divs for high score and initial page-->
+<div class="highScore" id="scoreBoard">
+    <p>Your final score is: <span id="score"></span></p>
+    <form>
+    <p>Enter Your Initials: <input id=""></p>
+    <button id="btn" type="submit">Submit</button>
+</div>
 
     
     <script src="./assets/js/script.js"></script>
