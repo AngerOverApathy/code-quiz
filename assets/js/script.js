@@ -47,6 +47,8 @@ var checkAnswer = document.getElementById('checkAnswer')
 var viewScore = document.getElementById('scoreBoard')
 
 const submitBtn = document.getElementById('submit') //submit button
+const highScoreList = 5;
+const highScore = 'highScores';
 
 document.getElementById('btn').style.display = "none";
 viewScore.classList.add('hide')
@@ -90,7 +92,7 @@ function newQuestion() {
 
     
 
-    //Empty out choices div in HTML
+//Empty out choices div in HTML
     choicesEl.innerHTML =  "";
     currentQuestion.choices.forEach(function(choice, i) {
         var choiceBtn = document.createElement("button");
@@ -105,12 +107,12 @@ function newQuestion() {
 function choiceClick() {
     
     if(this.value !== questionsArr[questionIndex].answer) {
-        time -=10;
+        time -=10
     } 
     else if(this.value === questionsArr[questionIndex].answer) {
-        score++;
-        console.log(score);
-        } 
+         score+=10; //store score in local storage
+         document.getElementById('score').innerHTML = score;
+    } 
         
     if(time <= 0) {
             !time === 0;
@@ -119,15 +121,30 @@ function choiceClick() {
     questionIndex++;
 
     if(questionIndex === questionsArr.length || questionsArr.length === 0) {
-        window.alert("The quiz is over");
-        clearInterval(timerId);
-        questions.classList.add('hide');
+            window.alert("The quiz is over")
+            clearInterval(timerId)
+            questions.classList.add('hide');
 
     } else {
         newQuestion();
     }
 };
 
+function quizEnd () {
+
+}
+
+
+//ability to view and clear high scores
+function checkHighScore(score) {
+    const highScores = JSON.parse(localStorage.getItem(highScores)) ?? [];
+    const lowestScore = highScores[highScoreList - 1]?.score ?? 0;
+    
+    if (score > lowestScore) {
+      saveHighScore(score, highScores); // TODO
+      showHighScores(); // TODO
+    }
+  };
 
 //time remaining
 startBtn.onclick = startQuiz;
