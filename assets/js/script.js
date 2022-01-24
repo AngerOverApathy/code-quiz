@@ -103,29 +103,30 @@ function newQuestion() {
 }
 
 function choiceClick() {
-    console.log(this.value)
+    
     if(this.value !== questionsArr[questionIndex].answer) {
         time -=10;
     } 
     else if(this.value === questionsArr[questionIndex].answer) {
         score++;
+        console.log(score);
         } 
         
     if(time <= 0) {
-            time === 0;
+            !time === 0;
         };
 
     questionIndex++;
 
-    if(questionIndex === questionsArr.length) {
-        function quizEnd () {
-    clearInterval(timerId);
-    questions.classList.add('hide');
-}
+    if(questionIndex === questionsArr.length || questionsArr.length === 0) {
+        window.alert("The quiz is over");
+        clearInterval(timerId);
+        questions.classList.add('hide');
+
     } else {
         newQuestion();
     }
-}
+};
 
 
 //time remaining
