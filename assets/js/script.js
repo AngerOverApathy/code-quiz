@@ -46,13 +46,15 @@ var userPrompt = document.getElementById('prompt')
 var checkAnswer = document.getElementById('checkAnswer')
 var viewScore = document.getElementById('scoreBoard')
 
-const submitBtn = document.getElementById('submit') //submit button
+const submitBtn = document.getElementById('submitBtn') //submit button
 const highScoreList = 5;
 const highScore = 'highScores';
 
 document.getElementById('btn').style.display = "none";
 viewScore.classList.add('hide')
 questions.setAttribute('id', 'questions')
+
+submitBtn.onclick = submitHighScore
 
 //toggle hidden attribute
 function startQuiz() {
@@ -89,6 +91,7 @@ function newQuestion() {
     title.textContent = currentQuestion.prompt;
     userPrompt.innerHTML = "";
     userPrompt.appendChild(title);
+    console.log("score: ", score)
 
     
 
@@ -105,9 +108,8 @@ function newQuestion() {
 }
 
 function choiceClick() {
-    
     if(this.value !== questionsArr[questionIndex].answer) {
-        time -=10
+        time -=10;
     } 
     else if(this.value === questionsArr[questionIndex].answer) {
          score+=10; //store score in local storage
@@ -124,6 +126,7 @@ function choiceClick() {
             window.alert("The quiz is over")
             clearInterval(timerId)
             questions.classList.add('hide');
+            quizEnd ();
 
     } else {
         newQuestion();
@@ -131,9 +134,14 @@ function choiceClick() {
 };
 
 function quizEnd () {
-
+    viewScore.classList.remove('hide')
 }
 
+
+
+function submitHighScore (e) {
+    e.preventDefault();
+}
 
 //ability to view and clear high scores
 function checkHighScore(score) {

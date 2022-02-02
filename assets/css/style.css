@@ -112,5 +112,5 @@ header {
     color: var(--primary-color);
     display: inline-block;
     font-size: 20px;
-    height: 60px;
+    /*height: 60px;*/
 }
